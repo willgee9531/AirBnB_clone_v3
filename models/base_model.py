@@ -57,7 +57,7 @@ class BaseModel:
         self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
-        
+
     def to_dict(self):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
@@ -65,19 +65,9 @@ class BaseModel:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        if '_password' in new_dict:
-            new_dict['password'] = new_dict['_password']
-            new_dict.pop('_password', None)
-        if 'amenities' in new_dict:
-            new_dict.pop('amenities', None)
-        if 'reviews' in new_dict:
-            new_dict.pop('reviews', None)
         new_dict["__class__"] = self.__class__.__name__
-        new_dict.pop('_sa_instance_state', None)
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-        if not save_to_disk:
-            new_dict.pop('password', None)
         return new_dict
 
     def delete(self):
