@@ -8,13 +8,13 @@ from models.amenity import Amenity
 from models.place import Place
 
 
-@app_views.route('/places/<string:place_id>/amenities', methods=['GET'],
+@app_views.route("/places/<place_id>/amenities", methods=["GET"],
                  strict_slashes=False)
 def get_place_amenities(place_id):
     """get amenity information for a specified place"""
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
-        abort(404)
+        abort(404, 'Not found')
     amenities = []
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         amenity_objects = place.amenities
@@ -25,8 +25,8 @@ def get_place_amenities(place_id):
     return jsonify(amenities)
 
 
-@app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
-                 methods=['DELETE'], strict_slashes=False)
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
+                 methods=["DELETE"], strict_slashes=False)
 def delete_place_amenity(place_id, amenity_id):
     """deletes an amenity object from a place"""
     place = storage.get("Place", place_id)
@@ -44,7 +44,7 @@ def delete_place_amenity(place_id, amenity_id):
     return jsonify({})
 
 
-@app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  methods=['POST'], strict_slashes=False)
 def post_place_amenity(place_id, amenity_id):
     """adds an amenity object to a place"""
