@@ -73,7 +73,7 @@ def handle_place_by_id(place_id):
         return jsonify(place_by_id.to_dict()), 200
 
 
-@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+@app_views.route('/places_search', methods=["POST"], strict_slashes=False)
 def post_places_search():
     """searches for a place"""
     if request.get_json() is not None:
